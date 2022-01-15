@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {LOGIN_USER} from '../constants/ActionTypes';
 
-const loginUser = (dataToSubmit) => {
+export const loginUser = (dataToSubmit) => {
 
   const request = axios.post('users/login', dataToSubmit)
     .then(response => response.data)
@@ -11,5 +11,3 @@ const loginUser = (dataToSubmit) => {
       payload: request
     }
 }
-
-export default loginUser;

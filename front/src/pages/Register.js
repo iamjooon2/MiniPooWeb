@@ -1,30 +1,45 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom'; 
 import loginUser from '../actions/user_action';
 
-const Login = (props) => {
+const Register = (props) => {
 
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
   }
 
+  const onNameHandler = (e) => {
+    setName(e.currentTarget.value);
+  }
+
   const onPasswordHandler = (e) => {
     setPassword(e.currentTarget.value);
+  }
+  
+  const onConfirmPasswordHandler = (e) => {
+    setConfirmPassword(e.currentTarget.value);
   }
 
   const onSubmitHandler = (e) => {
     e.preventDefault(); // to prevent page refresh
 
-    console.log("email", email);
-    console.log("password", password);
+    if (confirmPassword !== password) {
+      return alert('Check your password');
+    }
 
+    console.log("email", email);
+    console.log("name", name);
+    console.log("password", password);
+    console.log("confirmpassword", confirmPassword);
+    
     let body = {
       email : email,
       password : password
@@ -44,16 +59,17 @@ const Login = (props) => {
       <Container>
         <form onSubmit={onSubmitHandler}>
           <InputBlock type = "email" placeholder = "Email" value = {email} onChange = {onEmailHandler}/>
+          <InputBlock type = "text" placeholder = "Name" value = {name}  onChange = {onNameHandler}/>
           <InputBlock type = "password" placeholder = "Password" value = {password} onChange = {onPasswordHandler}/>
-          <ButtonBlock> login </ButtonBlock>
+          <InputBlock type = "password" placeholder = "Confirm Password" value = {confirmPassword} onChange = {onConfirmPasswordHandler}/>
+          <ButtonBlock type = "submit"> Register </ButtonBlock>
         </form>
-        <RequestBlock><Link to = "/register">I don't have an account</Link></RequestBlock>
       </Container>
     </>
   )
 }
 
-export default Login;
+export default Register;
 
 const Container = styled.div`
   display : flex;
@@ -87,13 +103,4 @@ const ButtonBlock = styled.button`
     background-color : #6344C6;
     color : #DADEE0;
     cursor : pointer;
-  }
-`;
-
-const RequestBlock = styled.a`
-  margin-top : 10px;
-  &:hover{
-  text-decoration : underline; 
-  cursor : pointer;
-  }
 `;
