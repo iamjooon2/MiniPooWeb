@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {LOGIN_USER} from '../constants/ActionTypes';
+import {LOGIN_USER, REGISTER_USER} from '../constants/ActionTypes';
 
 export const loginUser = (dataToSubmit) => {
 
@@ -8,6 +8,17 @@ export const loginUser = (dataToSubmit) => {
 
     return {
       type : LOGIN_USER,
+      payload: request
+    }
+}
+
+export const registerUser = (dataToSubmit) => {
+
+  const request = axios.post('users/register', dataToSubmit)
+    .then(response => response.data)
+
+    return {
+      type : REGISTER_USER,
       payload: request
     }
 }

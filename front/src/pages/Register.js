@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import loginUser from '../actions/user_action';
+import registerUser from '../actions/user_action';
 
 const Register = (props) => {
 
@@ -42,15 +43,16 @@ const Register = (props) => {
     
     let body = {
       email : email,
-      password : password
+      password : password,
+      name : name
     }
 
-    dispatch(loginUser(body))
+    dispatch(registerUser(body))
       .then(response => {
-        if (response.payload.loginSuccess) {
-          props.history.push('/')
+        if (response.payload.register) {
+          props.history.push('/login')
         } else {
-          alert('Error');
+          alert('Fail to register');
         }
       })
   }
