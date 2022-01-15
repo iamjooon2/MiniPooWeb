@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-const LoginPage = () => {
+import styled from 'styled-components';
 
+const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,13 +27,49 @@ const LoginPage = () => {
   }
   return (
     <>
-      <form onSubmit={onSubmitHandler}>
-        <input type = "email" value = {email} onChange = {onEmailHandler} />
-        <input type = "password" value = {password} onChange = {onPasswordHandler}/>
-        <button> login </button>
-      </form>
+      <Container>
+        <form onSubmit={onSubmitHandler}>
+          <InputBlock type = "email" value = {email} onChange = {onEmailHandler}/>
+          <InputBlock type = "password" value = {password} onChange = {onPasswordHandler}/>
+          <ButtonBlock> login </ButtonBlock>
+        </form>
+      </Container>
     </>
   )
 }
 
 export default LoginPage;
+
+const Container = styled.div`
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction : column;
+  width: 100vw;
+  height: 100vh;
+`;
+
+const InputBlock = styled.input`
+  padding : 10px;
+  justify-content: center;
+  align-items : center;
+  border-radius : 7px;
+  width : 98%;
+  border : none;
+  box-shadow : 0px 0px 3px gray;
+  margin-bottom : 10px;
+`;
+
+const ButtonBlock = styled.button`
+  margin-top : 5px;
+  padding : 4px;
+  border : 0px;
+  border-radius : 4px;
+  width : 98%;
+  height : 28px;
+  transition: .15s;
+  &:hover {
+    background-color : #6344C6;
+    color : #DADEE0;
+    cursor : pointer;
+`;
