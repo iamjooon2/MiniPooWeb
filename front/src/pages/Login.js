@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import loginUser from '../actions/user_action';
 
-const LoginPage = () => {
+const Login = (props) => {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
@@ -15,7 +19,8 @@ const LoginPage = () => {
   }
 
   const onSubmitHandler = (e) => {
-    e.preventDefault(); // prevent page refresh
+    e.preventDefault(); // to prevent page refresh
+
     console.log("email", email);
     console.log("password", password);
 
@@ -24,6 +29,14 @@ const LoginPage = () => {
       password : password
     }
 
+    dispatch(loginUser(body))
+      .then(response => {
+        if (response.payload.loginSuccess) {
+          props.history.push('/')
+        } else {
+          alert('Error');
+        }
+      })
   }
   return (
     <>
@@ -38,7 +51,7 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage;
+export default Login;
 
 const Container = styled.div`
   display : flex;
