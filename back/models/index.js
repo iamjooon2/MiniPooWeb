@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const env = process.env.NODE_ENV || 'devlopment';
-const config = require('../config/config')[env];
+const config= require(__dirname + '/../config/config.js')[env];
 const db = {};
 
 //sequelize가 mysql이랑 nodejs을 연결시킴
