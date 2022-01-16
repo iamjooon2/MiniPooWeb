@@ -42,12 +42,14 @@ const Login = (props) => {
   return (
     <>
       <Container>
-        <form onSubmit={onSubmitHandler}>
-          <InputBlock type = "email" placeholder = "Email" value = {email} onChange = {onEmailHandler}/>
-          <InputBlock type = "password" placeholder = "Password" value = {password} onChange = {onPasswordHandler}/>
-          <ButtonBlock type = "submit"> login </ButtonBlock>
-        </form>
-        <RequestBlock><Link to = "/register">I don't have an account</Link></RequestBlock>
+        <Wrapper>
+          <form onSubmit={onSubmitHandler}>
+            <InputBlock type = "email" placeholder = "Email" value = {email} onChange = {onEmailHandler}/>
+            <InputBlock type = "password" placeholder = "Password" value = {password} onChange = {onPasswordHandler}/>
+            <ButtonBlock type = "submit"> login </ButtonBlock>
+          </form>
+          <RequestBlock><Link to = "/register">I don't have an account</Link></RequestBlock>
+        </Wrapper>
       </Container>
     </>
   )
@@ -59,9 +61,17 @@ const Container = styled.div`
   display : flex;
   justify-content: center;
   align-items: center;
-  flex-direction : column;
   width: 100vw;
   height: 100vh;
+`;
+
+const Wrapper = styled.div`
+  display : flex;
+  flex-direction : column;
+  align-items : center;
+  justify-content : center;
+  width : 360px;
+  height : 360px;
 `;
 
 const InputBlock = styled.input`
@@ -69,7 +79,7 @@ const InputBlock = styled.input`
   justify-content: center;
   align-items : center;
   border-radius : 7px;
-  width : 98%;
+  width : 95%;
   border : none;
   box-shadow : 0px 0px 3px gray;
   margin-bottom : 10px;
@@ -78,9 +88,9 @@ const InputBlock = styled.input`
 const ButtonBlock = styled.button`
   margin-top : 5px;
   padding : 4px;
-  border : 0px;
+  border : none;
   border-radius : 4px;
-  width : 98%;
+  width : 100%;
   height : 28px;
   transition: .15s;
   &:hover {

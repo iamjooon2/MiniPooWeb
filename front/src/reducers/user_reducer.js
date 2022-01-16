@@ -7,14 +7,12 @@ const user = (state = {}, action) => {
           return {
              ...state, 
              loginSuccess: action.payload 
-            }
-          break;
+            }      
       case REGISTER_USER:
           return {
              ...state, 
              register: action.payload
             }
-          break;
       default:
           return state;
   }

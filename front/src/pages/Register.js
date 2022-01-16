@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../actions/user_action';
@@ -58,13 +59,16 @@ const Register = (props) => {
   return (
     <>
       <Container>
-        <form onSubmit={onSubmitHandler}>
-          <InputBlock type = "email" placeholder = "Email" value = {email} onChange = {onEmailHandler}/>
-          <InputBlock type = "text" placeholder = "Username" value = {name}  onChange = {onNameHandler}/>
-          <InputBlock type = "password" placeholder = "Password" value = {password} onChange = {onPasswordHandler}/>
-          <InputBlock type = "password" placeholder = "Confirm Password" value = {confirmPassword} onChange = {onConfirmPasswordHandler}/>
-          <ButtonBlock type = "submit"> Register </ButtonBlock>
-        </form>
+        <Wrapper>
+          <form onSubmit={onSubmitHandler} >
+            <InputBlock type = "email" placeholder = "Email" value = {email} onChange = {onEmailHandler}/>
+            <InputBlock type = "text" placeholder = "Username" value = {name}  onChange = {onNameHandler}/>
+            <InputBlock type = "password" placeholder = "Password" value = {password} onChange = {onPasswordHandler}/>
+            <InputBlock type = "password" placeholder = "Confirm Password" value = {confirmPassword} onChange = {onConfirmPasswordHandler}/>
+            <ButtonBlock type = "submit"> Register </ButtonBlock>
+          </form>
+          <RequestBlock><Link to = "/login">I already have an account</Link></RequestBlock>
+        </Wrapper>
       </Container>
     </>
   )
@@ -76,17 +80,24 @@ const Container = styled.div`
   display : flex;
   justify-content: center;
   align-items: center;
-  flex-direction : column;
   width: 100vw;
   height: 100vh;
 `;
 
+const Wrapper = styled.div`
+  display : flex;
+  flex-direction : column;
+  align-items : center;
+  justify-content : center;
+  width : 360px;
+  height : 360px;
+`;
 const InputBlock = styled.input`
   padding : 10px;
   justify-content: center;
   align-items : center;
   border-radius : 7px;
-  width : 98%;
+  width : 95%;
   border : none;
   box-shadow : 0px 0px 3px gray;
   margin-bottom : 10px;
@@ -97,11 +108,20 @@ const ButtonBlock = styled.button`
   padding : 4px;
   border : 0px;
   border-radius : 4px;
-  width : 98%;
+  width : 100%;
   height : 28px;
   transition: .15s;
   &:hover {
     background-color : #6344C6;
     color : #DADEE0;
     cursor : pointer;
+  }
+`;
+
+const RequestBlock = styled.a`
+  margin-top : 10px;
+  &:hover{
+  text-decoration : underline; 
+  cursor : pointer;
+  }
 `;

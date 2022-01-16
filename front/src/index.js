@@ -5,23 +5,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import {Provider} from 'react-redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
 import { applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
 import Reducer from './reducers';
+import rootReducer from './reducers';
 
-const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);
+const store = createStore(rootReducer, composeWithDevTools());
 
 ReactDOM.render(
-  <Provider store = {createStoreWithMiddleware(Reducer,
-            window.__REDUX_DEVTOOLS_EXTENSION__ &&
-            window.__REDUX_DEVTOOLS_EXTENSION__()        
-      )}>
+  <Provider store = {store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Provider>
-  ,document.getElementById('root')
+  </Provider>,
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
