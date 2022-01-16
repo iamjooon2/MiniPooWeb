@@ -1,7 +1,21 @@
 const express = require('express'); //노드 모듈 가져오기
-const user = require('./models/user');
 const app = express();
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const port = 5000;
+const axios = require("axios");
+
+const mysql = require('mysql2');
+const db = require('./config/db');
+
+app.get("/users", (req, res) => {
+  db.connection.query( `SELECT * FROM user`, (err, results)=>{
+      if (err)
+        console.log(err);
+      res.send(results);
+  });
+});
+
 
 //app.get -> 가져오다
 //app.post -> 생성하기
@@ -20,8 +34,18 @@ app.get('/api', (req, res) => {
   res.send('API Routing is now complete');
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+app.post('/register', (req, res) => {
+  //회원가입시 필요한 정보들을 front에서 가지고 오면
+  //그 정보들을 db에 넣어준다
+  const user = new user(req.body)
+
+  user.save((err, userInfo) => {
+    if (err) {
+      return res.json({ success: false, err })
+    } else {
+      return res.status(200).json({ success: true })
+    }
+  })
 })
 
 app.post('/api/user/login', (req, res) => {
@@ -42,5 +66,9 @@ app.post('/api/user/login', (req, res) => {
         })
     })
   })
+})
 
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
 })

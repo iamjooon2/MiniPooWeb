@@ -60,7 +60,7 @@ const Register = (props) => {
       <Container>
         <form onSubmit={onSubmitHandler}>
           <InputBlock type = "email" placeholder = "Email" value = {email} onChange = {onEmailHandler}/>
-          <InputBlock type = "text" placeholder = "Name" value = {name}  onChange = {onNameHandler}/>
+          <InputBlock type = "text" placeholder = "Username" value = {name}  onChange = {onNameHandler}/>
           <InputBlock type = "password" placeholder = "Password" value = {password} onChange = {onPasswordHandler}/>
           <InputBlock type = "password" placeholder = "Confirm Password" value = {confirmPassword} onChange = {onConfirmPasswordHandler}/>
           <ButtonBlock type = "submit"> Register </ButtonBlock>
