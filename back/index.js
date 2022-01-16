@@ -44,7 +44,7 @@ app.post('/register', (req, res) => {
     }
     res.send(results);
   })
-}
+};
 
 
 //app.get -> 가져오다

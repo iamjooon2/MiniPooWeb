@@ -3,7 +3,7 @@ import {LOGIN_USER, REGISTER_USER} from '../constants/ActionTypes';
 
 export const loginUser = (dataToSubmit) => {
 
-  const request = axios.post('users/login', dataToSubmit)
+  const request = axios.post('/users/login', dataToSubmit)
     .then(response => response.data)
     
     return {
@@ -14,7 +14,7 @@ export const loginUser = (dataToSubmit) => {
 
 export const registerUser = (dataToSubmit) => {
 
-  const request = axios.post('users/register', dataToSubmit)
+  const request = axios.post('/users/register', dataToSubmit)
     .then(response => response.data)
 
     return {
