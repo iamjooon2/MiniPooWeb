@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import {Link} from 'react-router-dom'; 
-import loginUser from '../actions/user_action';
+import { loginUser } from '../actions/user_action';
 
 const Login = (props) => {
 
@@ -45,7 +45,7 @@ const Login = (props) => {
         <form onSubmit={onSubmitHandler}>
           <InputBlock type = "email" placeholder = "Email" value = {email} onChange = {onEmailHandler}/>
           <InputBlock type = "password" placeholder = "Password" value = {password} onChange = {onPasswordHandler}/>
-          <ButtonBlock> login </ButtonBlock>
+          <ButtonBlock type = "submit"> login </ButtonBlock>
         </form>
         <RequestBlock><Link to = "/register">I don't have an account</Link></RequestBlock>
       </Container>

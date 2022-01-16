@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import loginUser from '../actions/user_action';
-import registerUser from '../actions/user_action';
+import { registerUser } from '../actions/user_action';
 
 const Register = (props) => {
 
