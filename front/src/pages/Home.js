@@ -6,8 +6,7 @@ const Home = () => {
     <>
       <Container>
         <Wrapper>
-          <p1>Hi!</p1>
-          <div>This is MiniPooWeb!</div>
+          <p1>MiniPooWeb</p1>
         </Wrapper>
       </Container>
     </>

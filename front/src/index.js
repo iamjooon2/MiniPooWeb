@@ -5,17 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
-import { applyMiddleware, createStore } from 'redux';
+import  { createStore, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
-import Reducer from './reducers';
-import rootReducer from './reducers';
+import rootReducer from './reducers/index';
 
-const store = createStore(rootReducer, composeWithDevTools());
+const store = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore)
 
 ReactDOM.render(
-  <Provider store = {store}>
+  <Provider store = {store(rootReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__&&
+    window.__REDUX_DEVTOOLS_EXTENSION__()
+  )}>
     <BrowserRouter>
       <App />
     </BrowserRouter>

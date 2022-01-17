@@ -23,8 +23,6 @@ app.get("/users", (req, res) => {
   });
 });
 
-
-
 app.post('/register', (req, res) => {
   
   const email = req.body.email;
@@ -33,7 +31,8 @@ app.post('/register', (req, res) => {
 
   var sql= 'INSERT INTO user (EMAIL, NAME, PASSWORD) VALUES (?, ?, ?)';
   
-  db.connection.query( sql, [email, name, password], (err, results, field) => {
+  db.connection.query( sql, [email, name, password], 
+    (err, results, field) => {
     if (err){
       console.log(err);
       res.status(500).json({success: false, err});
@@ -44,7 +43,7 @@ app.post('/register', (req, res) => {
     }
     res.send(results);
   })
-};
+}
 
 
 //app.get -> 가져오다
