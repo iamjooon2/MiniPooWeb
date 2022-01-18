@@ -30,7 +30,7 @@ const Login = (props) => {
     //json으로 잘 담기는거 확인완료
     console.log(body);
 
-    //안먹는 중 - proxy설정오류로 추정(404)
+    
     dispatch(loginUser(body))
       .then(response => {
         if (response.payload.loginSuccess) {

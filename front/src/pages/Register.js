@@ -41,14 +41,16 @@ const Register = (props) => {
       password : password,
       name : name
     }
+     
+    console.log(body);
 
     //안먹는중
     dispatch(registerUser(body))
-      .then(res => {
-        if (res.payload.success) {
-          props.history.push('/login')
+      .then(response => {
+        if (response.payload.success) {
+          props.history.push('/login');
         } else {
-          alert('Fail to register');
+          alert('Fail to sign up');
         }
       })
   }

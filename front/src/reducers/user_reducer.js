@@ -1,4 +1,4 @@
-import {LOGIN_USER, REGISTER_USER} from '../constants/ActionTypes';
+import {LOGIN_USER, LOGOUT_USER, REGISTER_USER} from '../constants/ActionTypes';
 
 //eslint-disable-next-line
 const user = (state = {}, action) => {
@@ -8,6 +8,10 @@ const user = (state = {}, action) => {
              ...state, 
              loginSuccess: action.payload 
             }
+      case LOGOUT_USER:
+          return {
+            ...state
+          }
       case REGISTER_USER:
           return {
              ...state, 

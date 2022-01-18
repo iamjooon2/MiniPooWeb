@@ -1,61 +1,15 @@
 const express = require('express'); //노드 모듈 가져오기
 const app = express();
-const cors = require("cors");
 const port = 5000;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const db = require('./config/db');
 
 /* */
 app.use(bodyParser.urlencoded({ extended: true}));
-
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-
-app.get('/', (req, res) => { //루트디렉토리에 오면
-  res.send('Home directory is now open!'); //hello world 출력
-})
-
-
-//DB connection test
-app.get("/users", (req, res) => {
-  db.connection.query( `SELECT * FROM user`, (err, results) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send('Server Error');
-      }
-      res.send(results);
-  });
-});
-
-app.get('/api/hello', (req, res) => {
-  res.send('this is hello api')
-})
-
-app.post('/api/user/register', (req, res) => {
-  
-  var email = req.body.email;
-  var name = req.body.name;
-  var password = req.body.password;
-
-  var sql= 'INSERT INTO user (EMAIL, NAME, PASSWORD) VALUES (?, ?, ?)';
-  
-  console.log(email, name, password, sql);
-
-  db.connection.query( sql, [email, name, password], 
-    (err, results, field) => {
-    if (err){
-      console.log(err);
-      res.status(500).json({success: false, err});
-    } else {
-      res.status(200).json({
-        success: true
-      })
-    }
-    res.send(results);
-  })
-});
+//DB connection test -> success!
 
 
 //app.get -> 가져오다
@@ -67,14 +21,10 @@ app.post('/api/user/register', (req, res) => {
 //RESTfulapi 제대로 지키기 힘듬, 애매하면 post, 팀끼리 합의해서 함
 //swagger로 API 문서화 잘 함
 
-app.get('/', (req, res) => { //루트디렉토리에 오면
-  res.send('Home directory is now open!'); //hello world 출력
-})
-
-app.get('/api', (req, res) => { 
-  res.send('API Routing is now complete');
+app.get('/api/hello', (req, res) => {
+  res.send('Mainpage response accept success!')
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Example app is now listening at http://localhost:${port}`)
 })
