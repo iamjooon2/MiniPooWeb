@@ -1,0 +1,23 @@
+{
+  "name": "minipooweb",
+  "version": "1.0.0",
+  "description": "my first fullstack web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run back --prefix back\" \"npm start --prefix front\"" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/junheeyeap/MiniPooWeb.git"
+  },
+  "author": "junheeyeap",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/junheeyeap/MiniPooWeb/issues"
+  },
+  "homepage": "https://github.com/junheeyeap/MiniPooWeb#readme",
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
