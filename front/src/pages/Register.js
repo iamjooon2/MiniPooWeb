@@ -36,26 +36,23 @@ const Register = (props) => {
       return alert('Check your password');
     }
 
-    console.log("email", email);
-    console.log("name", name);
-    console.log("password", password);
-    console.log("confirmpassword", confirmPassword);
-    
     let body = {
       email : email,
       password : password,
       name : name
     }
 
+    //안먹는중
     dispatch(registerUser(body))
-      .then(response => {
-        if (response.payload.register) {
+      .then(res => {
+        if (res.payload.success) {
           props.history.push('/login')
         } else {
           alert('Fail to register');
         }
       })
   }
+  
   return (
     <>
       <Container>
@@ -118,7 +115,8 @@ const ButtonBlock = styled.button`
   }
 `;
 
-const RequestBlock = styled.a`
+const RequestBlock = styled.div`
+  text-decoration-line : none;
   margin-top : 10px;
   &:hover{
   text-decoration : underline; 

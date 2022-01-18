@@ -1,16 +1,22 @@
 const express = require('express'); //노드 모듈 가져오기
 const app = express();
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const port = 5000;
-const axios = require("axios");
-
-const mysql = require('mysql2');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const db = require('./config/db');
+
+/* */
+app.use(bodyParser.urlencoded({ extended: true}));
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+
 
 app.get('/', (req, res) => { //루트디렉토리에 오면
   res.send('Home directory is now open!'); //hello world 출력
 })
+
 
 //DB connection test
 app.get("/users", (req, res) => {
@@ -23,14 +29,20 @@ app.get("/users", (req, res) => {
   });
 });
 
-app.post('/register', (req, res) => {
+app.get('/api/hello', (req, res) => {
+  res.send('this is hello api')
+})
+
+app.post('/api/user/register', (req, res) => {
   
-  const email = req.body.email;
-  const name = req.body.name;
-  const password = req.body.password;
+  var email = req.body.email;
+  var name = req.body.name;
+  var password = req.body.password;
 
   var sql= 'INSERT INTO user (EMAIL, NAME, PASSWORD) VALUES (?, ?, ?)';
   
+  console.log(email, name, password, sql);
+
   db.connection.query( sql, [email, name, password], 
     (err, results, field) => {
     if (err){
@@ -43,7 +55,7 @@ app.post('/register', (req, res) => {
     }
     res.send(results);
   })
-}
+});
 
 
 //app.get -> 가져오다

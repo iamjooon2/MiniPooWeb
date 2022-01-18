@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Home = () => {
+
+  useEffect(() => {
+    axios.get('/api/hello')
+      .then(response => {
+        console.log(response);
+      })
+  }, []);
+
   return (
     <>
       <Container>
         <Wrapper>
-          <p1>MiniPooWeb</p1>
+          MiniPooWeb
         </Wrapper>
       </Container>
     </>

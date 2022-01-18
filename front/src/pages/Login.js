@@ -22,14 +22,15 @@ const Login = (props) => {
   const onSubmitHandler = (e) => {
     e.preventDefault(); // to prevent page refresh
 
-    console.log("email", email);
-    console.log("password", password);
-
     let body = {
       email : email,
       password : password
     }
 
+    //json으로 잘 담기는거 확인완료
+    console.log(body);
+
+    //안먹는 중 - proxy설정오류로 추정(404)
     dispatch(loginUser(body))
       .then(response => {
         if (response.payload.loginSuccess) {
@@ -100,7 +101,8 @@ const ButtonBlock = styled.button`
   }
 `;
 
-const RequestBlock = styled.a`
+const RequestBlock = styled.div`
+  text-decoration-line : none;
   margin-top : 10px;
   &:hover{
   text-decoration : underline; 
