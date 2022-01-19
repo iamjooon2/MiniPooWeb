@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../actions/user_action';
 
-const Register = (props) => {
+const Register = props => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -38,23 +39,22 @@ const Register = (props) => {
 
     let body = {
       email : email,
+      name : name,
       password : password,
-      name : name
     }
-     
-    console.log(body);
 
-    //안먹는중
     dispatch(registerUser(body))
-      .then(response => {
-        if (response.payload.success) {
-          props.history.push('/login');
+      .then(res  => {
+        console.log(res);
+        if (res.payload.success){
+          alert("Success");
+          navigate(-1);
         } else {
-          alert('Fail to sign up');
+          alert("error");
         }
-      })
-  }
-  
+    });
+  };
+ 
   return (
     <>
       <Container>

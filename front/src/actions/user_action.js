@@ -3,7 +3,7 @@ import {LOGIN_USER, LOGOUT_USER, REGISTER_USER} from '../constants/ActionTypes';
 
 export const loginUser = (dataToSubmit) => {
   const request = axios.post('/api/user/login', dataToSubmit)
-    .then(res => res.data)
+    .then(response => response.data)
     
     return {
       type : LOGIN_USER,
@@ -11,7 +11,7 @@ export const loginUser = (dataToSubmit) => {
     }
 }
 
-export const  logoutUser = (dataToSubmit) => {
+export const logoutUser = (dataToSubmit) => {
   const request = axios.get(`/api/user/logout`, dataToSubmit)
     .then(response => response.data);
 
@@ -23,7 +23,7 @@ export const  logoutUser = (dataToSubmit) => {
 
 export const registerUser = (dataToSubmit) => {
   const request = axios.post('/api/user/register', dataToSubmit)
-    .then(res => res.data);
+    .then(response => response.data);
 
     return {
       type : REGISTER_USER,

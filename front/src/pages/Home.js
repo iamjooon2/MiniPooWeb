@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 const Home = () => {
 
@@ -16,6 +17,8 @@ const Home = () => {
       <Container>
         <Wrapper>
           MiniPooWeb
+          <br /><Link to = "/login">login</Link> <br />
+        <Link to = "/register">register</Link>
         </Wrapper>
       </Container>
     </>
