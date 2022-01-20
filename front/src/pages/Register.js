@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../actions/user_action';
 
-const Register = props => {
+const Register = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

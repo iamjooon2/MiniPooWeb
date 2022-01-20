@@ -4,6 +4,7 @@ const port = 5000;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const db = require('./config/db');
+const bcrypt = require('bcrypt');
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
@@ -16,20 +17,22 @@ app.post('/api/user/register', (req, res) => {
   const name = req.body.name;
   const password = req.body.password;
 
+  const encryptedPassowrd = bcrypt.hashSync(password, 10);
+
   var sql= 'INSERT INTO user (EMAIL, NAME, PASSWORD) VALUES (?, ?, ?)';
 
-  db.connection.query( sql, [email, name, password], 
+  db.connection.query( sql, [email, name, encryptedPassowrd],
     function (err, rows, coulmns){
-    if (err){
-      console.log(err);
-      res.status(500);
-      return res.status(403).json({ success: false, err });
-    } else {
-      console.log('가입성공');
-      res.status(200);
-      return res.status(200).json({ success: true });
-    } 
-  })
+      if (err){
+        console.log(err);
+        res.status(500);
+        return res.status(403).json({ success: false, err });
+      } else {
+        console.log('가입성공');
+        res.status(200);
+        return res.status(200).json({ success: true });
+      }
+    })
 });
 
 app.post('/api/user/login', (req, res) => {

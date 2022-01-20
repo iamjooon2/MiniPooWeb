@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 
 const Home = () => {
-
+  
   useEffect(() => {
     axios.get('/api/hello')
       .then(response => {
