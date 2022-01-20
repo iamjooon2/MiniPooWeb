@@ -47,10 +47,10 @@ const Register = props => {
       .then(res  => {
         console.log(res);
         if (res.payload.success){
-          alert("Success");
-          navigate(-1);
+          alert("Success!");
+          navigate('/login');
         } else {
-          alert("error");
+          alert("error!");
         }
     });
   };

@@ -1,18 +1,19 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom'; 
+import { Link, useNavigate} from 'react-router-dom'; 
 import { loginUser } from '../actions/user_action';
 
-const Login = (props) => {
+const Login = props => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const onEmailHandler = (e) => {
-    setEmail(e.currentTarget.value);
+  const onNameHandler = (e) => {
+    setName(e.currentTarget.value);
   }
 
   const onPasswordHandler = (e) => {
@@ -23,24 +24,27 @@ const Login = (props) => {
     e.preventDefault(); // to prevent page refresh
 
     let body = {
-      email : email,
+      name : name,
       password : password
     }
-
-    //json으로 잘 담기는거 확인완료
-    console.log(body);
-
     
     dispatch(loginUser(body))
-      .then(response => {
-      })
+      .then(res  => {
+        console.log(res);
+        if (res.payload.loginSuccess){
+          alert("Success!");
+          navigate('/');
+        } else {
+          alert("error!");
+        }
+    });
   }
   return (
     <>
       <Container>
         <Wrapper>
           <form onSubmit={onSubmitHandler}>
-            <InputBlock type = "email" placeholder = "Email" value = {email} onChange = {onEmailHandler}/>
+            <InputBlock type = "name" placeholder = "@Username" value = {name} onChange = {onNameHandler}/>
             <InputBlock type = "password" placeholder = "Password" value = {password} onChange = {onPasswordHandler}/>
             <ButtonBlock type = "submit"> login </ButtonBlock>
           </form>
