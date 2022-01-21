@@ -32,10 +32,10 @@ const Login = () => {
       .then(res  => {
         console.log(res);
         if (res.payload.loginSuccess){
-          alert("Success!");
+          alert("Login Success!");
           navigate('/');
         } else {
-          alert("error!");
+          alert("Login error!");
         }
     });
   }

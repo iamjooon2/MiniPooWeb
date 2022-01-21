@@ -47,7 +47,7 @@ const Register = () => {
       .then(res  => {
         console.log(res);
         if (res.payload.success){
-          alert("Success!");
+          alert("Sign up Success!");
           navigate('/login');
         } else {
           alert("error!");
