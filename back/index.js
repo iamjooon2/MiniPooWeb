@@ -19,7 +19,7 @@ app.post('/api/user/register', (req, res) => {
   const password = req.body.password;
   const encryptedPassowrd = bcrypt.hashSync(password, 10);
 
-  //bodyParser 필수
+  //bodyParser가 있어야 한다
   var sql= 'INSERT INTO user (EMAIL, NAME, PASSWORD) VALUES (?, ?, ?)';
 
   db.connection.query( sql, [email, name, encryptedPassowrd],
