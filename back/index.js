@@ -3,9 +3,12 @@ const app = express();
 const port = 5000;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const db = require('./config/db');
 const bcrypt = require('bcrypt');
 const { connection } = require('./config/db');
+const MySQLStore = require('express-mysql-session')(session);
+const sessionStore = new MySQLStore(options);
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
@@ -26,13 +29,12 @@ app.post('/api/user/register', (req, res) => {
     function (err, rows, coulmns){
       if (err){
         console.log(err);
-        res.status(500);
-        return res.json({ success: false, err });
+        res.json({ success: false, err });
       } else {
         console.log('가입성공');
-        res.status(200);
-        return res.status(200).json({ success: true });
+        res.status(200).json({ success: true });
       }
+    return res;
     })
 });
 
@@ -58,7 +60,7 @@ app.post('/api/user/login', function(req, res){
         } else { //해당하는 name이 없다면
           res.json({ loginSuccess: false }); // loginSuccess: false
         }
-      } return res; // 함수 결과값
+      } return res;
     })
 });
 
