@@ -3,17 +3,16 @@ const app = express();
 const port = 5000;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-// const session = require('express-session');
-// const db = require('./config/db');
-// const passport = require('passport');
-// const passportConfig = require('./passport/index');
+const session = require('express-session');
+const passport = require('passport')
+,LocalStrategy = require('passport-local').Strategy;
 
-app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cookieParser());
 app.use(express.json());
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 const router = require('./routes/user');
 
