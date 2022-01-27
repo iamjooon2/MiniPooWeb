@@ -12,11 +12,23 @@ router.use(cookieParser());
 router.use(passport.initialize());
 router.use(passport.session());
 
-passport.serializeUser(function(user, done) {
-  console.log("serializeUser ", user)
-  done(null, user.ID);
+passport.serializeUser(function (user, done) { // 로그인 성공 시 콜백 함수 호출
+  console.log('[SerializeUser]', user);
+  done(null, user.authId); // 접속한 사용자의 식별 값이, session store에 user.authId로 저장
 });
 
+passport.deserializeUser(function (authId, done) { // 로그인 성공한 사용자가 웹 페이지 이동할 때 마다 콜백 함수 호출
+  console.log('[DeserializeUser]', authId); // authId 인자에는 serializeUser 메소드에서 보낸 user.authId 값이 담김
+  db.query(
+    'SELECT * FROM users WHERE authId=?',
+    [authId],
+    function (err, results) {
+      if (err) done(err);
+      if (!results[0]) done(err);
+      var user = results[0];
+      done(null, user);
+    });
+});
 passport.deserializeUser(function(id, done) {
     console.log("deserializeUser id ", id)
     const userinfo;
@@ -39,7 +51,6 @@ router.get('/login', function(req, res, next) {
   }
   res.render('login', {userId: userId});
 });
-
 
 passport.use(new LocalStrategy({
     usernameField: 'id',
@@ -71,9 +82,10 @@ router.get('/home', function (req, res, next) {
 });
 
 router.post('/loginAf',
-  passport.authenticate('local', { successRedirect: '/home',
-                                   failureRedirect: '/login',
-                                   failureFlash: true })
+  passport.authenticate('local', { 
+    successRedirect: '/home',
+    failureRedirect: '/login',
+    failureFlash: true })
 );
 
 module.exports = router;

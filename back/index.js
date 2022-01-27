@@ -18,24 +18,6 @@ const router = require('./routes/user');
 
 app.use('/api/user', router);
 
-// var MySQLStore = require('express-mysql-session')(session);
-// var LocalStrategy = require('passport-local').Strategy;
-
-// app.use(session({
-//   secret: '1234DSFs@adf1234!@#$asd',
-//   resave: false,
-//   saveUninitialized: true,
-// 	store: new MySQLStore({
-//     	host: '127.0.0.1',
-//     	user: 'root',
-//     	password :'cert0188*',
-//     	database : 'minipooweb'
-//     })
-// }));
-
-
-// passportConfig(passport);
-
 //db 연결 확인용
 app.get("/checkuser", (req, res) => {
   db.connection.query( `SELECT * FROM user`, (err, results) => {

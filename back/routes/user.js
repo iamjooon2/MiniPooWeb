@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const db = require('../config/db');
+const passport = require('passport')
+,LocalStrategy = require('passport-local').Strategy;
 
 //=================================
 //             User
@@ -30,6 +32,29 @@ router.post('/register', (req, res) => {
     })
 });
 
+router.post('/register', 
+  function (req, res, next) {
+  hasher({ 
+    password: req.body.password 
+  }, function (err, pass, salt, hash) {
+      const encryptedPassowrd = bcrypt.hashSync(password, 10);
+      const user = {
+        authId: 'local: ' + req.body.username,
+        username: req.body.username,
+        password: encryptedPassowrd,
+      };
+      db.query(
+        'INSERT INTO user SET ?', user, 
+        function (err, result) {
+          if (error) 
+            throw error;
+          res.redirect('/');
+      });
+    }
+  );
+});
+
+
 router.post('/login', function(req, res){     
 
   const name = req.body.name;
@@ -54,6 +79,17 @@ router.post('/login', function(req, res){
       } return res;
     })
 });
+
+router.post('/login',
+  passport.authenticate(
+    'local',
+    {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: false
+    }
+  )
+);
 
 router.get('/logout', function(req, res){
   req.logout();
