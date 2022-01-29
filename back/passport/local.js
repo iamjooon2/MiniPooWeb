@@ -1,92 +1,38 @@
-const express = require('express');
-const router = express.Router();
+const passport = require('passport');
+const Strategy = require('passport-local');
+const bcrypt = require('bcrypt');
 const db = require('../config/db');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const passport = require('passport')
-, LocalStrategy = require('passport-local').Strategy;
 
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(cookieParser());
-router.use(passport.initialize());
-router.use(passport.session());
+const findUserByName = async (name) => {
+	const findUserQuery = "SELECT * FROM USER WHERE NAME = ?";
+	const result = await db.connection.query(findUserQuery, [name]);
+	return result[0];
+};
 
-passport.serializeUser(function (user, done) { // 로그인 성공 시 콜백 함수 호출
-  console.log('[SerializeUser]', user);
-  done(null, user.authId); // 접속한 사용자의 식별 값이, session store에 user.authId로 저장
-});
+const findUserByPassword = async (password) => {
+	const findpPasswordQuery = "SELECT * FROM USER WHERE password = ?";
+	const result = await db.connection.query(findpPasswordQuery, [password]);
+	return result[0];
+};
 
-passport.deserializeUser(function (authId, done) { // 로그인 성공한 사용자가 웹 페이지 이동할 때 마다 콜백 함수 호출
-  console.log('[DeserializeUser]', authId); // authId 인자에는 serializeUser 메소드에서 보낸 user.authId 값이 담김
-  db.query(
-    'SELECT * FROM users WHERE authId=?',
-    [authId],
-    function (err, results) {
-      if (err) done(err);
-      if (!results[0]) done(err);
-      var user = results[0];
-      done(null, user);
-    });
-});
-passport.deserializeUser(function(id, done) {
-    console.log("deserializeUser id ", id)
-    const userinfo;
-    var sql = 'SELECT * FROM USER WHERE ID=?';
-    db.connection.query(sql , [id], function (err, result) {
-      if(err) console.log('mysql 에러');     
-     
-      console.log("deserializeUser mysql result : " , result);
-      const json = JSON.stringify(result[0]);
-      userinfo = JSON.parse(json);
-      done(null, userinfo);
-    })    
-});
-
-router.get('/login', function(req, res, next) {
-  var userId = "";
-  if(req.cookies['loginId'] !== undefined){
-    console.log(req.cookies['loginId']);
-    userId = req.cookies['rememberId'];
-  }
-  res.render('login', {userId: userId});
-});
-
-passport.use(new LocalStrategy({
-    usernameField: 'id',
-    passwordField: 'pwd'
-  },
-  function(username, password, done) {
-    var sql = 'SELECT * FROM USER WHERE ID=? AND PWD=?';
-    mysql.query(sql , [username, password], function (err, result) {
-      if(err){
-        console.log('mysql error')
-      }  
-      // 입력받은 ID와 비밀번호에 일치하는 회원정보가 없는 경우   
-      if (result.length === 0) {
-        console.log("결과 없음");
-        return done(null, false, { message: 'Incorrect' });
-      } else {
-        console.log(result);
-        const json = JSON.stringify(result[0]);
-        const userinfo = JSON.parse(json);
-        console.log("userinfo " + userinfo);
-        return done(null, userinfo);  // result값으로 받아진 회원정보를 return해줌
+module.exports = () => {
+  passport.use(new Strategy({ //첫번째 : req.body에 대한 설정
+    usernameField : 'name',
+    passwordField : 'password',
+  }, async (name, password, done) => { //로그인 전략
+      try {
+        const user = await findUserByName(name);
+        if (!user) {
+          done(null, false, { reason : '사용자가 존재하지 않음'});
+        }
+        const result = await bcrypt.compare(password, findUserByPassword(password));
+        if (result) {
+          return done(null, user);
+        }
+        return done(null, false, { reason : '비밀번호가 틀림'});
+      } catch (error) {
+        console.log(error);
+        return done(error);
       }
-    })
-  }
-));
-
-router.get('/home', function (req, res, next) {
-  res.render('home', {"user_id" : req.user.ID});
-});
-
-router.post('/loginAf',
-  passport.authenticate('local', { 
-    successRedirect: '/home',
-    failureRedirect: '/login',
-    failureFlash: true 
-  })
-);
-
-module.exports = router;
+  }));
+}
