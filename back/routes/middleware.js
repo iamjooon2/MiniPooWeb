@@ -1,4 +1,4 @@
-exports.isLoggedIn = (req, res, next) => {
+exports.isLoggedIn = (req, res) => {
   if (req.isAuthenticated()) {
     next();
   } else {

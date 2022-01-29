@@ -1,10 +1,8 @@
-const router = require("../passport/local");
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db');
 const passport = require('passport')
 
-router.post('/login', (req ,res) => {
+router.post('/login', (req ,res, next) => {
 	//local 전략에서의 done의 세 parameter가 콜백으로 들어온다
 	passport.authenticate('local', (err, user, info) => {
 		if (err) {
@@ -15,13 +13,20 @@ router.post('/login', (req ,res) => {
 			console.log(info);
 			return res.status(401).send(info);
 		}
-		return req.login(user, async (loginErr) => {
+		return req.login(user, (loginErr) => {
 			if (loginErr) {
 				console.error(loginErr);
+				return next(loginErr);
 			}
-			return res.json(user);
+			return res.status(200).json(user);
 		});
-	})(req, res)
+	})(req, res, next);
+});
+
+router.post('logout', (req, res) => {
+	req.logout();
+	req.session().destroy();
+	req.send('logout success!');
 })
 
 module.exports = router;
