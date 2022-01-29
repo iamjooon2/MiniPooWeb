@@ -85,7 +85,8 @@ router.post('/loginAf',
   passport.authenticate('local', { 
     successRedirect: '/home',
     failureRedirect: '/login',
-    failureFlash: true })
+    failureFlash: true 
+  })
 );
 
 module.exports = router;

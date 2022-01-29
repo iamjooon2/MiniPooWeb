@@ -1,3 +1,4 @@
+const router = require("../passport/local");
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -5,110 +6,47 @@ const db = require('../config/db');
 const passport = require('passport')
 ,LocalStrategy = require('passport-local').Strategy;
 
-//=================================
-//             User
-//=================================
+const userInfoInsert = async (email, name, password) => {
+	const userInsertQuery = "INSERT INTO USER(email, name, password) values(?, ?, ?)";
+	await db.connection.query(userInsertQuery, [email, name, password]);
+};
 
-router.post('/register', (req, res) => {
+router.post("/register", async(req, res) => {
 
-  const email = req.body.email;
+	const email = req.body.email;
   const name = req.body.name;
-  const password = req.body.password;
-  const encryptedPassowrd = bcrypt.hashSync(password, 10);
+  const encryptedPassowrd = bcrypt.hashSync(req.body.password, 10);
+	try {
+		const result = await userInfoInsert(email, name, encryptedPassowrd);
+	} catch (err) {
+		console.log(err);
+	}
+})
 
-  //bodyParser가 있어야 한다
-  var sql= 'INSERT INTO user (EMAIL, NAME, PASSWORD) VALUES (?, ?, ?)';
+const userInfoFilteredByName = async (name) => {
+	const userFilterQuery = "SELECT * FROM USER WHERE NAME = ?";
+	const result = await db.connection.query(userFilterQuery, [name]);
+	return result[0];
+};
 
-  db.connection.query( sql, [email, name, encryptedPassowrd],
-    function (err, rows, coulmns){
-      if (err){
-        console.log(err);
-        res.json({ success: false, err });
-      } else {
-        console.log('가입성공');
-        res.status(200).json({ success: true });
-      }
-    return res;
-    })
-});
-
-router.post('/register', 
-  function (req, res, next) {
-  hasher({ 
-    password: req.body.password 
-  }, function (err, pass, salt, hash) {
-      const encryptedPassowrd = bcrypt.hashSync(password, 10);
-      const user = {
-        authId: 'local: ' + req.body.username,
-        username: req.body.username,
-        password: encryptedPassowrd,
-      };
-      db.query(
-        'INSERT INTO user SET ?', user, 
-        function (err, result) {
-          if (error) 
-            throw error;
-          res.redirect('/');
-      });
-    }
-  );
-});
-
-
-router.post('/login', function(req, res){     
-
-  const name = req.body.name;
-  const password = req.body.password;                     
-  var sql = 'SELECT * FROM user WHERE name = ?';
-                                                           
-  db.connection.query(sql, name, 
-    function (err, rows, columns) {
-      if (err) {
-        console.log(err);
-        res.json({ loginSuccess: false, err });
-      } else {
-        if (rows[0]!=undefined) { //해당하는 name이 있다면
-          if (bcrypt.compareSync(password, rows[0].PASSWORD)) { //DB의 password와 비교하여
-            res.status(200).json({ loginSuccess: true }); //같으면 loginSuccess : true
-          } else {
-            res.json({ loginSuccess: false }); //다르면 loginSuccess : false
-          }
-        } else { //해당하는 name이 없다면
-          res.json({ loginSuccess: false }); // loginSuccess: false
-        }
-      } return res;
-    })
-});
-
-router.post('/login',
-  passport.authenticate(
-    'local',
-    {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureFlash: false
-    }
-  )
+passport.use(
+	new LocalStrategy(
+			async (name, password, done) => {
+					const result = await userInfoFilteredByName(name);
+				
+					if (result.length > 0) {
+							const user = result[0];
+							if (user.password === password) {
+									return done(null, user);
+							} else {
+									return done(null, false, {message: "틀린 비밀번호입니다"});
+							}
+					} else {
+							return done(null, false, {message: "존재하지 않는 유저입니다"});
+					}
+			}
+	)
 );
 
-router.get('/logout', function(req, res){
-  req.logout();
-  req.session.save(function(){
-    res.redirect('/');
-  });
-});
-
-// router.get("/auth", auth, (req, res) => {
-//   res.status(200).json({
-//       _id: req.user._id,
-//       isAdmin: req.user.role === 0 ? false : true,
-//       isAuth: true,
-//       email: req.user.email,
-//       name: req.user.name,
-//       lastname: req.user.lastname,
-//       role: req.user.role,
-//       image: req.user.image,
-//   });
-// });
 
 module.exports = router;
