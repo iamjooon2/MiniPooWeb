@@ -7,8 +7,10 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 const passport = require('passport');
-const passportConfig = require('./passport');
+const passportConfig = require('./modules/passport');
 passportConfig();
+
+const { pool:serviceDB } = require('adapters/servicedb')
 
 const {
   SERVER_HOST,
@@ -30,8 +32,8 @@ const server = async () => {
   app.use(passport.initialize());
   app.use(passport.session({}));
 
-  const v1Router = require('routes/v1');
-  app.use('/v1', v1Router);
+  const v1Router = require('api/v1');
+  app.use('/api/v1', v1Router(serviceDB));
 
   app.get('/api/hello', (req, res) => {
     res.send('Accepting data from the server is completely success!');

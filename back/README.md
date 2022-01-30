@@ -6,6 +6,18 @@
 docker-compose up --build -d
 ```
 
+# code direcotry structure
+
+### basic dependency flows
+
+| src/index.js => api/v1/* => domains[user, todo, poo] => adapters[db, google, kakao]
+
+### global dependencies
+
+modules/*
+
+
+
 
 # tips
 

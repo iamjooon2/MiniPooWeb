@@ -23,6 +23,7 @@ services:
     ports:
       - "3306:3306" # {접근 포트}:{내부 포트}
     environment:
+      - TZ=UTC
       - MYSQL_DATABASE=minipooweb # 여기에 있는 환경변수 Name들은 mysql:latest 가 정한 이름임.(reserved word 예약어)
       - MYSQL_USER=poo
       - MYSQL_PASSWORD=p@ssword
