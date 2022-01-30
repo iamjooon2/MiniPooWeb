@@ -1,0 +1,5 @@
+console.log('repository', 'adapater에 있는 DataStorage나 thirdparty에 접근을 위함')
+console.log('repository', '데이터에 접근하는 로직을 다 때려박음')
+console.log('repository', 'repository에서 다른 repository는 부르지 않도록 함.')
+console.log('repository', 'handler만 여러 repository를 부를 수 있음.')
+console.log('repository', '가능한 이 규칙을 지켜서 짜보도록. 안되거나 어려우면 바로 콜 하도록')
