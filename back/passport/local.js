@@ -8,28 +8,20 @@ module.exports = () => {
     usernameField : 'name',
     passwordField : 'password',
   }, (name, password, done) => { //로그인 전략
-      try {
-        //에러나는 부분 : user가 불러와지지 않음
-        const user = findUserByName(name);
-        console.log(user);
-        if (!user) {
-          done(null, false, { reason : '사용자가 존재하지 않음' });
-        }
-        const comparePasswordTrue = bcrypt.compareSync(password, user.password);
-        if (comparePasswordTrue) {
-          return done(null, user);
-        }
-        return done(null, false, { reason : '비밀번호가 틀림' });
-      } catch (error) {
-        console.log(error);
-        return done(error);
-      }
-  }));
+    const findUserQuery = 'SELECT * FROM USER WHERE NAME=?';
+    db.connection.query(findUserQuery , [name], function (err, result) {
+      if (err) console.log('mysql 에러');  
+      // 입력받은 ID와 비밀번호에 일치하는 회원정보가 없는 경우  
+      if (result.length === 0) {
+        console.log("결과 없음");
+        return done(null, false, { message: 'Incorrect' });
+      } else {
+        console.log(result);
+        const json = JSON.stringify(result[0]);
+        const userinfo = JSON.parse(json);
+        console.log("userinfo " + userinfo);
+        return done(null, userinfo);  // result값으로 받아진 회원정보를 return해줌
+      } 
+    })
+  }))
 }
-
-const findUserByName = (name) => {
-	const findUserQuery = "SELECT * FROM USER WHERE NAME = ?";
-	const result = db.connection.query(findUserQuery, [name]);
-  console.log(name);
-	return result[0];
-};
