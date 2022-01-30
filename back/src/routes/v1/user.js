@@ -1,13 +1,17 @@
 const express = require('express');
-const router = express.Router();
 const passport = require('passport')
+const router = express.Router();
+
+router.get('/', (req, res) => {
+	res.send({ wow: 'hi' })
+})
 
 router.post('/login', (req ,res, next) => {
 	//local 전략에서의 done의 세 parameter가 콜백으로 들어온다
 	passport.authenticate('local', (err, user, info) => {
 		if (err) {
 			console.log(err);
-			return 
+			return
 		}
 		if (info) { //client error
 			console.log(info);
