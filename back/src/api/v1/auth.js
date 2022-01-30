@@ -1,23 +1,36 @@
 const express = require('express');
 const passport = require('passport')
 const helper = require('api/helper')
-const AuthHandler = require('domains/auth/handler')
-
-
+const AuthHandler = require('domains/auths/handler')
+const { parseISO } = require('date-fns')
 
 module.exports = (serviceDB) => {
 	const authHandler = new AuthHandler(serviceDB)
-	// const sessionHandler = new SessionHandler(serviceDB)
 
 	const router = express.Router();
 	router.post('/login-jin', async (req, res) => {
 		try {
-			const userInfo = await authHandler.login({ username, password })
-			if(!!userInfo) {
-
-			}
+			const { body: { username, password } } = req
+			const sessionData = await authHandler.login({ username, password })
+			res.cookie('session_token', sessionData.token, {
+				expires: sessionData.expiry_at, // 해당 쿠키가 만료되는 날을 표시함
+				httpOnly: true, // 브라우저에서 제어 못하도록, 쿠키는 특별한 헤더임, 브라우저하고 서버하고 같이 특별한 작업이 있음
+				// cookie의 작동은 http 프로토콜의 규약임
+			})
+			res.sendStatus(204)
 		} catch(e) {
 			helper.sendErrorResponse(res, e, 503, "로그인 과정에 에러가 발생했습니다")
+		}
+	})
+
+	router.post('/logout-jin', async (req, res) => {
+		try {
+			const { session_token } = req.cookies
+			await authHandler.logout(session_token)
+			res.clearCookie("session_token")
+			res.sendStatus(204)
+		} catch(e) {
+			helper.sendErrorResponse(res, e, 503, "로그아웃에서 에러가 발생했습니다")
 		}
 	})
 

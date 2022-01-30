@@ -4,6 +4,13 @@
 
 ``` bash
 docker-compose up --build -d
+
+npm run db:init # database load
+npm run db:drop # database drop
+npm start
+
+# open server.http # it's like postman on vscode.
+
 ```
 
 # code direcotry structure

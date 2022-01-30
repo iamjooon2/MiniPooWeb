@@ -13,6 +13,8 @@ version: "3.9"
 
 # 1. https://www.slideshare.net/pyrasis/docker-fordummies-44424016
 # 2. https://www.44bits.io/ko/post/easy-deploy-with-docker
+# 3. CLI로 DB 접근하는거 힘들제~ MySQLWorkbench라는 도구를 쓰도록 하여라
+#     google에 `mysqlworkbench desktop download` 를 검색하여 다운받거라~
 # 기타 모르는건 공홈봐라
 # https://docs.docker.com/compose/reference/
 

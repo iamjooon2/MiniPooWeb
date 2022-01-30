@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/cross-env NODE_PATH=src NODE_ENV=development ./node_modules/.bin/nodemon src/index.js",
+    "db:init": "./node_modules/.bin/cross-env NODE_PATH=src NODE_ENV=development ./node_modules/.bin/nodemon src/adapters/servicedb/init.js",
+    "db:drop": "./node_modules/.bin/cross-env NODE_PATH=src NODE_ENV=development ./node_modules/.bin/nodemon src/adapters/servicedb/drop.js",
     "test": "echo \"ERROR: no test specified\" && exit 1"
   },
   "author": "junheeyeap",
@@ -14,13 +16,15 @@
     "body-parser": "^1.19.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "date-fns": "^2.28.0",
     "dotenv": "^12.0.3",
     "express": "^4.17.2",
     "express-mysql-session": "^2.1.7",
     "express-session": "^1.17.2",
     "mysql2": "^2.3.3",
     "passport": "^0.5.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "uuidv4": "^6.2.12"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

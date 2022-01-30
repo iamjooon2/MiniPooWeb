@@ -1,12 +1,12 @@
 
 module.exports = {
-  sendErrorResponse: (res, error, statusCode, message) => {
+  sendErrorResponse: (res, e, statusCode, message) => {
     const resBody = {
-      error: JSON.parse(JSON.stringify(error)),
+      error: e.toString(),
       message: message,
     }
     res.status(statusCode)
     res.send(resBody)
-    console.error(statusCode, resBody)
+    console.error(e, resBody)
   }
 }
