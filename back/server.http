@@ -1,0 +1,14 @@
+# login-jin
+POST http://0.0.0.0:5001/api/v1/auth/login-jin HTTP/1.1
+content-type: application/json
+
+{
+  "username": "foo6",
+  "password": "bar"
+}
+
+# logout-jin
+POST http://0.0.0.0:5001/api/v1/auth/logout-jin HTTP/1.1
+content-type: application/json
+
+{}

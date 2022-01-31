@@ -1,0 +1,37 @@
+CREATE TABLE IF NOT EXISTS `users`(
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` BIGINT NULL,
+  `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` BIGINT NULL,
+  `status` ENUM('ACTIVE', 'INACTIVE', 'DELETE') NULL DEFAULT 'ACTIVE',
+  `type` ENUM('USER', 'ADMIN') NULL DEFAULT 'USER',
+  `username` VARCHAR(300) NULL,
+  `password` VARCHAR(300) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE
+);
+
+CREATE TABLE IF NOT EXISTS `todos` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` BIGINT NULL,
+  `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` BIGINT NULL,
+  `status` ENUM('ACTIVE', 'INACTIVE', 'DELETE') NULL DEFAULT 'ACTIVE',
+  `type` ENUM('TEXT', 'TIME') NULL DEFAULT 'TEXT',
+  `title` VARCHAR(500) NULL,
+  `content` TEXT NULL,
+  `check` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `minipooweb`.`sessions` (
+  `token` VARCHAR(300) NOT NULL,
+  `user_id` BIGINT NOT NULL,
+  `data` TEXT NOT NULL,
+  `expiry_at` TIMESTAMP NOT NULL,
+  `login_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`token`)
+);

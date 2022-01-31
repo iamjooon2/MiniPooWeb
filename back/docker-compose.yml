@@ -1,0 +1,32 @@
+version: "3.9"
+
+# 순서
+# 로컬에 있는 mysql완전 제거하기
+# docker와 docker-compose 설치하기
+# docker의 설정 들어가서 메모리는 1/3 또는 2gb이상 주기
+# docker의 설정에서 CPU 코어는 1개 또는 2개 주기
+# docker 실행하기
+# $ cd Pooweb/back
+# $ docker-compose up --build -d
+
+# 공부자료
+
+# 1. https://www.slideshare.net/pyrasis/docker-fordummies-44424016
+# 2. https://www.44bits.io/ko/post/easy-deploy-with-docker
+# 3. CLI로 DB 접근하는거 힘들제~ MySQLWorkbench라는 도구를 쓰도록 하여라
+#     google에 `mysqlworkbench desktop download` 를 검색하여 다운받거라~
+# 기타 모르는건 공홈봐라
+# https://docs.docker.com/compose/reference/
+
+services:
+  poo-db:
+    image: mysql:latest # image의 이름
+    container_name: poo-db # docker의 container이름
+    ports:
+      - "3306:3306" # {접근 포트}:{내부 포트}
+    environment:
+      - TZ=UTC
+      - MYSQL_DATABASE=minipooweb # 여기에 있는 환경변수 Name들은 mysql:latest 가 정한 이름임.(reserved word 예약어)
+      - MYSQL_USER=poo
+      - MYSQL_PASSWORD=p@ssword
+      - MYSQL_ROOT_PASSWORD=p@ssword
