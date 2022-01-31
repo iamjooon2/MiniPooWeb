@@ -34,7 +34,6 @@ class UserRepository {
         reject({
           error: e,
           message: "server internal error",
-          rows: rows,
         })
       } finally {
         this.serviceDB.releaseConnection(conn)

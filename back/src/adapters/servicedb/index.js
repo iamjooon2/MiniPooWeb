@@ -3,6 +3,9 @@ const mysql = require('mysql2');
 
 
 const pool = mysql.createPool({
+  // 내가 썼던
+  // createConnection => 단일 연결 방식으로, 요청이 있을 때마다 연결 객체를 생성했다가, 제거하는 것이 반복
+  // createPool => 미리 정해진 갯수의 연결을 생성 후 Request가 발생하면 해당 Req에 연결을 할당하고 다시 반납
   ...serviceDB,
 
   charset: 'utf8mb4', // utf8mb4 를 해야 native emojif 를 저장할 수 있음 😄 <- 요딴거
@@ -11,9 +14,11 @@ const pool = mysql.createPool({
   bigNumberStrings: true,
   // debug: process.env.NODE_ENV !== "production",
   // trace: process.env.NODE_ENV !== "production",
+  // 위 두줄은 어떻게 데이터 넘어가나 확인시 중요
   multipleStatements: true,
 
   // ----- connection pool 옵션 .. 이건 나중에 중고급 개발자가 되면 아래 옵션이 중요해짐
+
   /**
    * The milliseconds before a timeout occurs during the initial connection to the MySQL server. (Default: 10 seconds)
    */

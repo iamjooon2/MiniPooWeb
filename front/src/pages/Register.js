@@ -9,14 +9,9 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  const onEmailHandler = (e) => {
-    setEmail(e.currentTarget.value);
-  }
 
   const onNameHandler = (e) => {
     setName(e.currentTarget.value);
@@ -38,7 +33,6 @@ const Register = () => {
     }
 
     let body = {
-      email : email,
       name : name,
       password : password,
     }
@@ -60,7 +54,6 @@ const Register = () => {
       <Container>
         <Wrapper>
           <form onSubmit={onSubmitHandler} >
-            <InputBlock type = "email" placeholder = "Email" value = {email} onChange = {onEmailHandler}/>
             <InputBlock type = "text" placeholder = "@Username" value = {name}  onChange = {onNameHandler}/>
             <InputBlock type = "password" placeholder = "Password" value = {password} onChange = {onPasswordHandler}/>
             <InputBlock type = "password" placeholder = "Confirm Password" value = {confirmPassword} onChange = {onConfirmPasswordHandler}/>

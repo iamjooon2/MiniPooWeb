@@ -5,9 +5,10 @@ import {
   REGISTER_USER,
   AUTH_USER
       } from '../constants/ActionTypes';
+import { API_ROUTE } from '../constants/config';
 
 export const loginUser = (dataToSubmit) => {
-  const request = axios.post('/api/user/login', dataToSubmit)
+  const request = axios.post(`${API_ROUTE}/login`, dataToSubmit)
     .then(response => response.data)
     
     return {
@@ -17,7 +18,7 @@ export const loginUser = (dataToSubmit) => {
 }
 
 export const logoutUser = () => {
-  const request = axios.get(`/api/user/logout`)
+  const request = axios.get(`${API_ROUTE}/logout`)
     .then(response => response.data);
 
   return {
@@ -27,7 +28,7 @@ export const logoutUser = () => {
 }
 
 export const registerUser = (dataToSubmit) => {
-  const request = axios.post('/api/user/register', dataToSubmit)
+  const request = axios.post(`${API_ROUTE}/register`, dataToSubmit)
     .then(response => response.data);
 
     return { 
@@ -37,7 +38,7 @@ export const registerUser = (dataToSubmit) => {
 }
 
 export const auth = () =>{
-  const request = axios.get('/api/user/auth')
+  const request = axios.get(`${API_ROUTE}/auth`)
     .then(response => response.data);
 
   return {

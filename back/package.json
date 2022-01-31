@@ -2,13 +2,13 @@
   "name": "minipooweb-back",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/cross-env NODE_PATH=src NODE_ENV=development ./node_modules/.bin/nodemon src/index.js",
-    "db:init": "./node_modules/.bin/cross-env NODE_PATH=src NODE_ENV=development ./node_modules/.bin/nodemon src/adapters/servicedb/init.js",
-    "db:drop": "./node_modules/.bin/cross-env NODE_PATH=src NODE_ENV=development ./node_modules/.bin/nodemon src/adapters/servicedb/drop.js",
+    "start": ".\\node_modules\\.bin\\cross-env NODE_PATH=src NODE_ENV=development .\\node_modules\\.bin\\nodemon src\\index.js",
+    "db:init": ".\\node_modules\\.bin\\cross-env NODE_PATH=src NODE_ENV=development node src\\adapters\\servicedb\\init.js",
+    "db:drop": ".\\node_modules\\.bin\\cross-env NODE_PATH=src NODE_ENV=development node src\\adapters\\servicedb\\drop.js",
     "test": "echo \"ERROR: no test specified\" && exit 1"
   },
+
   "author": "junheeyeap",
   "license": "ISC",
   "dependencies": {

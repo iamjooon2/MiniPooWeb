@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 const Home = () => {
   
   useEffect(() => {
-    axios.get('/api/hello')
+    axios.get('/')
       .then(response => {
         console.log(response);
       })

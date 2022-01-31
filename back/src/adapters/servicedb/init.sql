@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `todos` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `minipooweb`.`sessions` (
+CREATE TABLE IF NOT EXISTS `minipooweb`.`sessions` (
   `token` VARCHAR(300) NOT NULL,
   `user_id` BIGINT NOT NULL,
   `data` TEXT NOT NULL,
