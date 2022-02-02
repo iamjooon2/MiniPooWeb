@@ -9,7 +9,7 @@ npm run db:init # database load
 npm run db:drop # database drop
 npm start
 
-# open server.http # it's like postman on vscode.
+# open server.http는 MAC에서 쓰자
 # 모루는건 물어봐
 ```
 

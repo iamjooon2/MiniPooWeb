@@ -34,6 +34,7 @@ class AuthHandler {
       throw e
     }
   }
+
 }
 
 module.exports = AuthHandler

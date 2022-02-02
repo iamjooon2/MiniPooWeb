@@ -10,4 +10,5 @@
 - React
 - Express
 - MySQL
+- Docker
 - EC2

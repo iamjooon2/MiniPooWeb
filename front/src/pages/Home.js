@@ -7,8 +7,8 @@ const Home = () => {
   
   useEffect(() => {
     axios.get('/')
-      .then(response => {
-        console.log(response);
+      .then(res => {
+        console.log(res);
       })
   }, [] );
 
@@ -16,8 +16,8 @@ const Home = () => {
     <>
       <Container>
         <Wrapper>
-          MiniPooWeb
-          <br /><Link to = "/login">login</Link> <br />
+          <div>MiniPooWeb</div>
+          <Link to = "/login">login</Link> <br />
         <Link to = "/register">register</Link>
         </Wrapper>
       </Container>

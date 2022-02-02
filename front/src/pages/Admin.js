@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
+const Admin = (props) => {
 
-const Admin = () => {
+  const user = useSelector(state => state.user);
 
   const [title, setTitle] = useState('');
   const [url, setURL] = useState('');
@@ -18,11 +21,22 @@ const Admin = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault(); // to prevent page refresh
 
-    let body = {
+    let postBlock = {
       title : title,
       url : url,
-      name : name
-    }
+      // user_id : user_id,
+      // post_id : posd_id
+    };
+
+    axios.post('/api/v1/posts', postBlock)
+    .then(res => {
+      if (res.data.success) {
+        refresh();
+      } else {
+        alert('Fail to upload!');
+      }
+    })
+  }
 
 
   return (
@@ -31,13 +45,12 @@ const Admin = () => {
         <form onSubmit={onSubmitHandler}>
           <InputBlock placeholder = "title" value = {title} onChange = {onTitleandler}/>
           <InputBlock placeholder = "link" value = {url} onChange = {onURLHandler}/>
-          <ButtonBlock type = "submit"> login </ButtonBlock>
+          <ButtonBlock type = "submit"> post </ButtonBlock>
         </form>
       </Container>
     </>
   )
 };
-
 export default Admin;
 
 const Container = styled.div`
@@ -66,9 +79,15 @@ const ButtonBlock = styled.button`
   width : 100%;
   height : 28px;
   transition: .15s;
-  &:hover {
+  &:hover{
     background-color : #6344C6;
     color : #DADEE0;
     cursor : pointer;
   }
+`;
+
+const TodosLists = styled.div`
+  display : flex;
+  align-items: center;
+  justify-content: center;
 `;
