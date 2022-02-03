@@ -24,14 +24,13 @@ const Admin = (props) => {
     let postBlock = {
       title : title,
       url : url,
-      // user_id : user_id,
-      // post_id : posd_id
+      // user_id : 
     };
 
     axios.post('/api/v1/posts', postBlock)
     .then(res => {
       if (res.data.success) {
-        refresh();
+        
       } else {
         alert('Fail to upload!');
       }
