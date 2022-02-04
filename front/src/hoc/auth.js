@@ -1,19 +1,30 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { authUser } from "actions/user_action";
+import { useNavigate } from "react-router-dom";
 
-export default (SpecificComponent, option, adminRoute = null) {
+export default function Auth({ SpecificComponent, option, adminRoute = null }) {
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  function AuthenticationCheck(props) {
+  dispatch(authUser()).then((response) => {
+    // 로그인 하지 않은 상태
+    if (!response.payload.isAuth) {
+      if (option) {
+        navigate("/login");
+      }
+    } else {
+      // 로그인 한 상태
+      if (adminRoute && !response.payload.isAdmin) {
+        navigate("/");
+      } else {
+        if (option === false) {
+          navigate("/");
+        }
+      }
+    }
+  });
 
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-      dispatch(auth().then(response => {
-        console.log(response);
-      }))
-
-    }, [])
-
-  }
+  return <SpecificComponent />;
 }

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { registerUser } from '../actions/user_action';
+import { registerUser } from 'actions/user_action';
 
 const Register = () => {
 

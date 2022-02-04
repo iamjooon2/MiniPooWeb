@@ -4,8 +4,8 @@ import {
   LOGOUT_USER, 
   REGISTER_USER,
   AUTH_USER
-      } from '../constants/ActionTypes';
-import { API_ROUTE } from '../constants/config';
+      } from 'constants/ActionTypes';
+import { API_ROUTE } from 'constants/config';
 
 export const loginUser = (dataToSubmit) => {
   const request = axios.post(`${API_ROUTE}/login`, dataToSubmit)
@@ -37,7 +37,7 @@ export const registerUser = (dataToSubmit) => {
     }
 }
 
-export const auth = () =>{
+export const authUser = () =>{
   const request = axios.get(`${API_ROUTE}/auth`)
     .then(response => response.data);
 
