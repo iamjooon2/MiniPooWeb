@@ -9,12 +9,13 @@ class PostRepository {
 
   findPostsByUserid = (user_id) => new Promise((resolve, reject) => {
     this.serviceDB.getConnection((err, conn) => {
+      const Query = `SELECT * FROM posts WHERE user_id = ?`
       try {
         if(err) {
           reject(err)
           return
         }
-        conn.execute("SELECT * FROM posts WHERE user_id = ?", [user_id], (err, rows) => {
+        conn.execute(Query, [user_id], (err, rows) => {
           if(err) {
             reject(err)
             return
@@ -40,16 +41,16 @@ class PostRepository {
 
   insertPost = (user_id, title, content) => new Promise((resolve, reject) => {
     this.serviceDB.getConnection(async (err, conn) => {
+      const Query = `INSERT INTO posts(user_id, title, content) VALUES(?,?,?)`
       try {
         if(err) {
           reject(err)
           return
         }
-        let [ affectedRow ] = await conn.promise().execute('INSERT INTO posts(user_id, title, content) VALUES(?, ?, ?)', [user_id, title, content])
+        await conn.promise().execute(Query , [user_id, title, content])
         const id = affectedRow.insertId
         let [ rows ] = await conn.promise().execute('SELECT * FROM posts WHERE id = ?', [id])
-        const postList = rows;
-        resolve(postList)
+        resolve(rows)
       } catch(e) {
         reject(e)
       } finally {
@@ -57,6 +58,27 @@ class PostRepository {
       }
     })
   })
+
+  deletePost = (user_id, id) => new Promise((resolve, reject) => {
+    this.serviceDB.getConnection(async (err, conn) => {
+      const Query = `DELETE FROM posts WHERE user_id = ? and id = ?`;
+      try {
+        if (err){
+          reject(err)
+          return
+        }
+        await conn.promise().excute(Query, [user_id, id])
+        resolve({
+          message : 'deleted success'
+        })
+      } catch(e) {
+        reject(e)
+      } finally {
+        this.serviceDB.releaseConnection(conn)
+      }
+    })
+  })
+
 }
 
 module.exports = PostRepository

@@ -41,7 +41,7 @@ class UserRepository {
     })
   })
 
-  insertPost = (username, password) => new Promise((resolve, reject) => {
+  insertUser = (username, password) => new Promise((resolve, reject) => {
     this.serviceDB.getConnection(async (err, conn) => {
       try {
         if(err) {

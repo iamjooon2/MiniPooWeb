@@ -23,14 +23,26 @@ class AuthHandler {
 
       return userInfo
     } catch (e) {
+      console.log(e)
       throw e
     }
   }
 
-  logout = async(token) => {
+  logout = async (token) => {
     try {
       await this.sessionRepository.deleteAnyway(token)
     } catch (e) {
+      console.log(e)
+      throw e
+    }
+  }
+
+  register = async({username, password}) => {
+    try {
+      let deletedUserInfo = await this.userRepository.insertUser(username, password)
+      return deletedUserInfo
+    } catch (e){
+      console.log(e)
       throw e
     }
   }
