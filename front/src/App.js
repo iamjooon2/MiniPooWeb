@@ -1,30 +1,39 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {  Routes, Route } from "react-router-dom";
 import About from 'pages/About';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Register from 'pages/Register';
 import Admin from 'pages/Admin';
-import CheckAuth from 'hoc/auth';
+// import Auth from 'hoc/auth';
 
 
 const App = () => {
-  return (
 
-     // Auth option
-     // null -> 누구나 접근 가능
-     // true -> 로그인 한 유저만 접근 가능
-     // false -> 로그인 한 유저는 접근 불가능
-    <Router>
+  // const CheckedHome = Auth(Home, null);
+  // const CheckedAbout = Auth(Home, null);
+  // const CheckedRegister = Auth(Home, false);
+  // const CheckedLogin = Auth(Home, false);
+  // const CheckedAdmin = Auth(Home, true);
+  
+  // Auth option
+  // null -> 누구나 접근 가능
+  // true -> 로그인 한 유저만 접근 가능
+  // false -> 로그인 한 유저는 접근 불가능
+  return (
       <Routes>
-        <Route path="/" element={<CheckAuth SpecificComponent={{Home}} option ={null} />} />
-        <Route path="/about" element={<CheckAuth SpecificComponent={{About}} option ={null} />} />
-        <Route path="/login" element={<CheckAuth SpecificComponent={{Login}} option ={false} />} />
-        <Route path="/register" element={<CheckAuth SpecificComponent={{Register}} option ={false} />} />
-        <Route path="/admin" element={<CheckAuth SpecificComponent={{Admin}} option ={true} />} />
+        {/* <Route path="/" element={<CheckedHome/> } />
+        <Route path="/about" element={<CheckedAbout/> } />
+        <Route path="/login" element={<CheckedLogin/> } />
+        <Route path="/register" element={<CheckedRegister/> } />
+        <Route path="/admin" element={<CheckedAdmin/> } /> */}
+        <Route path="/" element={<Home/> } />
+        <Route path="/about" element={<About/> } />
+        <Route path="/login" element={<Login/> } />
+        <Route path="/register" element={<Register/> } />
+        <Route path="/admin" element={<Admin/> } />      
       </Routes>
-    </Router>
   );
-};
+}
 
 export default App;
