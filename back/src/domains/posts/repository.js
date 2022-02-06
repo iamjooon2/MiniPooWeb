@@ -47,10 +47,11 @@ class PostRepository {
           reject(err)
           return
         }
-        await conn.promise().execute(Query , [user_id, title, content])
+        let [ affectedRow ] = await conn.promise().execute(Query , [user_id, title, content])
         const id = affectedRow.insertId
         let [ rows ] = await conn.promise().execute('SELECT * FROM posts WHERE id = ?', [id])
-        resolve(rows)
+        const postId = rows[0].id
+        resolve(postId)
       } catch(e) {
         reject(e)
       } finally {
@@ -67,10 +68,11 @@ class PostRepository {
           reject(err)
           return
         }
-        await conn.promise().excute(Query, [user_id, id])
-        resolve({
-          message : 'deleted success'
-        })
+        let [ affectedRow ] = await conn.promise().execute(Query , [user_id, id])
+        const id = affectedRow.insertId
+        let [ rows ] = await conn.promise().execute('SELECT * FROM posts WHERE id = ? and STATUS = DELETED', [id])
+        const deletedPostId = rows[0].id
+        resolve(deletedPostId)
       } catch(e) {
         reject(e)
       } finally {
