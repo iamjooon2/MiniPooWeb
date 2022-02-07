@@ -9,7 +9,8 @@ module.exports = (serviceDB) => {
 	
 	router.post('/login', async (req, res) => {
 		try {
-			const { body: { username, password } } = req
+			const username = req.body.username;
+			const password = req.body.password;   
 			console.log(username, password)
 			const sessionData = await authHandler.login({ username, password })
 			res.cookie('session_token', sessionData.token, {
@@ -17,7 +18,7 @@ module.exports = (serviceDB) => {
 				httpOnly: true, // 브라우저에서 제어 못하도록, 쿠키는 특별한 헤더임, 브라우저하고 서버하고 같이 특별한 작업이 있음
 				// cookie의 작동은 http 프로토콜의 규약임
 			})
-			res.sendStatus(204)
+			res.status(200).json({ loginSuccess: true })
 		} catch(e) {
 			helper.sendErrorResponse(res, e, 503, "로그인 과정에 에러가 발생했습니다")
 		}
@@ -34,8 +35,20 @@ module.exports = (serviceDB) => {
 		}
 	})
 
+	router.post('/register', async (req, res) => {
+		try {
+			const username = req.body.username
+			const password = req.body.password
+			await authHandler.register({ username, password })
+			res.sendStatus(204)
+			res.redirect('/')
+		} catch (e) {
+			helper.sendErrorResponse(res, e, 503, "등록중 에러 발생")
+		}
+	})
+
 	router.get('/', (req, res) => {
-		res.send({ wow: 'hi' })
+		res.send('hello from the server')
 	})
 
 	return router

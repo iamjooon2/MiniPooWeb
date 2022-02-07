@@ -69,8 +69,8 @@ class PostRepository {
           return
         }
         let [ affectedRow ] = await conn.promise().execute(Query , [user_id, id])
-        const id = affectedRow.insertId
-        let [ rows ] = await conn.promise().execute('SELECT * FROM posts WHERE id = ? and STATUS = DELETED', [id])
+        const selectedId = affectedRow.insertId
+        let [ rows ] = await conn.promise().execute('SELECT * FROM posts WHERE id = ? and STATUS = DELETED', [selectedId])
         const deletedPostId = rows[0].id
         resolve(deletedPostId)
       } catch(e) {

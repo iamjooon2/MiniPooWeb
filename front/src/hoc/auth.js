@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { authUser } from "actions/user_action";
 import { useNavigate } from "react-router-dom";
 
-export default function Auth({ SpecificComponent, option, adminRoute = null }) {
+const Auth = ({ SpecificComponent, option, adminRoute = null }) => {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,3 +28,5 @@ export default function Auth({ SpecificComponent, option, adminRoute = null }) {
 
   return <SpecificComponent />;
 }
+
+export default Auth;

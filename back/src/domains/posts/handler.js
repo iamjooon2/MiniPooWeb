@@ -17,16 +17,13 @@ class PostHandler {
     }
   }
 
-  delete = async ({}) => {
+  delete = async ({user_id, id}) => {
     try {
-      let postInfo = await this.postRepository.findPost(user_id, title, content)
+      let postInfo = await this.postRepository.deletePost(user_id, id)
       return postInfo
     } catch(e) {
-      console.log(e)
       throw e
     }
-
-
   }
 
 }

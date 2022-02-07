@@ -5,8 +5,8 @@ dotenv.config();
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-
-
+// const MySQLStore = require('express-mysql-session')(session);
+// const sessionStore = new MySQLStore(options);
 
 const { pool:serviceDB } = require('adapters/servicedb')
 
@@ -33,9 +33,6 @@ const server = async () => {
   app.listen(SERVER_PORT, SERVER_HOST, () => {
     console.log(`Example app is now listening to http://${SERVER_HOST}:${SERVER_PORT}`)
   })
-
-  
-
 }
 
 
