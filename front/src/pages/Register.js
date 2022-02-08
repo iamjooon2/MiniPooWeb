@@ -33,7 +33,7 @@ const Register = () => {
     }
 
     let body = {
-      name : name,
+      username : name,
       password : password,
     }
 

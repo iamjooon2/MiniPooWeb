@@ -20,6 +20,7 @@ version: "3.9"
 
 services:
   poo-db:
+    platform: linux/x86_64 #m1대비 추가
     image: mysql:latest # image의 이름
     container_name: poo-db # docker의 container이름
     ports:

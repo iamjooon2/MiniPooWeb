@@ -3,6 +3,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const cors = require('cors');
+
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 // const MySQLStore = require('express-mysql-session')(session);
@@ -16,6 +18,7 @@ const {
   COOKIE_SECRET,
 } = process.env
 
+
 const server = async () => {
   const app = express();
   app.use(express.json());
@@ -27,6 +30,8 @@ const server = async () => {
   //   secret : process.env.COOKIE_SECRET  // cookie에 보내주는 랜덤한 문자열의 기반
   // }));
   
+  app.use(cors());
+
   const v1Router = require('api/v1');
   app.use('/api/v1', v1Router(serviceDB));
 

@@ -31,10 +31,10 @@ export const registerUser = (dataToSubmit) => {
   const request = axios.post(`${API_ROUTE}/register`, dataToSubmit)
     .then(response => response.data);
 
-    return { 
-      type : REGISTER_USER,
-      payload: request
-    }
+  return { 
+    type : REGISTER_USER,
+    payload: request
+  }
 }
 
 export const authUser = () =>{

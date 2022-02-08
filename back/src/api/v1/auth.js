@@ -41,7 +41,9 @@ module.exports = (serviceDB) => {
 			const password = req.body.password
 			await authHandler.register({ username, password })
 			res.sendStatus(204)
-			res.redirect('/')
+			// res.redirect('/') // 이건 나중에 수정해서 보세용/
+			//json은 redirect 안먹음
+			//redirect()기능 알아둘 것
 		} catch (e) {
 			helper.sendErrorResponse(res, e, 503, "등록중 에러 발생")
 		}

@@ -5,17 +5,19 @@ const drop = async () => {
   try {
     const fileSQL = await fs.readFileSync('src/adapters/servicedb/drop.sql', { encoding: 'utf8' })
 
-    fileSQL.split(';').forEach((sql) => {
+    const splits = fileSQL.split(';')
+    for (let i = 0; i < splits.length; i += 1) {
+      const sql = splits[i]
       if (sql.indexOf('DROP') !== -1) {
-        serviceDB.connection.execute(sql, (err) => {
-          if(err) {
-            throw err
-          }
-        })
+        const [ res, err ] = await serviceDB.connection.promise().execute(sql)
+        console.info(sql)
+        console.log(res)
       }
-    })
+    }
   } catch(e) {
     console.error(e)
+  } finally {
+    process.exit(0)
   }
 }
 
