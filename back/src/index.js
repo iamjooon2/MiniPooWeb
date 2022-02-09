@@ -36,7 +36,7 @@ const server = async () => {
   app.use('/api/v1', v1Router(serviceDB));
 
   app.listen(SERVER_PORT, SERVER_HOST, () => {
-    console.log(`Example app is now listening to http://${SERVER_HOST}:${SERVER_PORT}`)
+    console.log(`Poo-server is now listening to http://${SERVER_HOST}:${SERVER_PORT}`)
   })
 }
 
