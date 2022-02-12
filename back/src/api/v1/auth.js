@@ -18,9 +18,10 @@ module.exports = (serviceDB) => {
 				httpOnly: true, // 브라우저에서 제어 못하도록, 쿠키는 특별한 헤더임, 브라우저하고 서버하고 같이 특별한 작업이 있음
 				// cookie의 작동은 http 프로토콜의 규약임
 			})
-			res.status(200).json({ loginSuccess: true })
+			return json({ loginSuccess: true })
 		} catch(e) {
 			helper.sendErrorResponse(res, e, 503, "로그인 과정에 에러가 발생했습니다")
+			return json({ loginSuccess: false })
 		}
 	})
 
@@ -40,12 +41,11 @@ module.exports = (serviceDB) => {
 			const username = req.body.username
 			const password = req.body.password
 			await authHandler.register({ username, password })
-			res.sendStatus(204)
-			// res.redirect('/') // 이건 나중에 수정해서 보세용/
 			//json은 redirect 안먹음
-			//redirect()기능 알아둘 것
+			return res.json({ success: true })
 		} catch (e) {
 			helper.sendErrorResponse(res, e, 503, "등록중 에러 발생")
+			return res.json({ success: false, err })
 		}
 	})
 

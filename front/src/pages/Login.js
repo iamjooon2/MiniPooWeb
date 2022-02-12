@@ -25,7 +25,7 @@ const Login = () => {
     e.preventDefault(); // to prevent page refresh
 
     let body = {
-      name : name,
+      username : name,
       password : password
     }
     

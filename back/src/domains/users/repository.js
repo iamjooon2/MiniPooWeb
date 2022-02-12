@@ -14,7 +14,7 @@ class UserRepository {
           reject(err)
           return
         }
-        // prepared statement를 사용하는건, SQLInjection attack 해킹을 최소화 하기 위함
+        //SQL Injection 방어 위해 prepared sentence 사용
         conn.execute("SELECT * FROM users WHERE username = ? AND password = ?", [username, password], (err, rows) => {
           if(err) {
             reject(err)
