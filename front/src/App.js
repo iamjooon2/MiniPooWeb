@@ -1,10 +1,10 @@
 import React from 'react';
 import {  Routes, Route } from "react-router-dom";
-import About from 'pages/About';
-import Home from 'pages/Home';
-import Login from 'pages/Login';
-import Register from 'pages/Register';
-import Admin from 'pages/Admin';
+import About from 'views/About';
+import Home from 'views/Home';
+import Login from 'views/Login';
+import Register from 'views/Register';
+import Admin from 'views/Admin';
 // import Auth from 'hoc/auth';
 
 

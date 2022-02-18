@@ -15,20 +15,24 @@ const { pool:serviceDB } = require('adapters/servicedb')
 const {
   SERVER_HOST,
   SERVER_PORT,
-  COOKIE_SECRET,
+  COOKIE_SECRET
 } = process.env
-
 
 const server = async () => {
   const app = express();
-  app.use(express.json());
+  app.use(express.json()); //express에 bodyparser 내장, json을 사용가능하게 한다
   app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser(process.env.COOKIE_SECRET));
-  // app.use(session({
-  //   saveUninitialized: false,
-  //   resave : false,
-  //   secret : process.env.COOKIE_SECRET  // cookie에 보내주는 랜덤한 문자열의 기반
-  // }));
+  app.use(session({
+    saveUninitialized: false,
+    resave : false, 
+    secret : process.env.COOKIE_SECRET,  // cookie에 보내주는 랜덤한 문자열의 기반
+    cookie: {
+
+      samesite : true,
+      expires: 60 * 60 * 24,
+    }
+   }));
   
   app.use(cors());
 
@@ -40,11 +44,8 @@ const server = async () => {
   })
 }
 
-
 try {
   server(SERVER_PORT);
 } catch (e) {
   console.error(e);
 }
-
-

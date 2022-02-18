@@ -6,22 +6,34 @@ module.exports = (serviceDB) => {
 	const authHandler = new AuthHandler(serviceDB)
 
 	const router = express.Router();
-	
+
+	router.get("/login", (req, res) => {
+		if (req.session.user) {
+		  res.send({
+			loggedIn: true, 
+			user: req.session.user 
+		})
+		} else {
+		  res.send({ loggedIn: false })
+		}
+	  })
+
 	router.post('/login', async (req, res) => {
 		try {
-			const username = req.body.username;
-			const password = req.body.password;   
-			console.log(username, password)
+			const {username, password} = req.body
 			const sessionData = await authHandler.login({ username, password })
-			res.cookie('session_token', sessionData.token, {
+			res.cookie('session_token', sessionData.token, { // 이거 통해서 보낸다 
 				expires: sessionData.expiry_at, // 해당 쿠키가 만료되는 날을 표시함
 				httpOnly: true, // 브라우저에서 제어 못하도록, 쿠키는 특별한 헤더임, 브라우저하고 서버하고 같이 특별한 작업이 있음
 				// cookie의 작동은 http 프로토콜의 규약임
 			})
-			return json({ loginSuccess: true })
+			return res.json({
+				loginSuccess: true ,
+				message: "login Success"
+			})
 		} catch(e) {
 			helper.sendErrorResponse(res, e, 503, "로그인 과정에 에러가 발생했습니다")
-			return json({ loginSuccess: false })
+			return ({ loginSuccess: false })
 		}
 	})
 
@@ -47,10 +59,6 @@ module.exports = (serviceDB) => {
 			helper.sendErrorResponse(res, e, 503, "등록중 에러 발생")
 			return res.json({ success: false, err })
 		}
-	})
-
-	router.get('/', (req, res) => {
-		res.send('hello from the server')
 	})
 
 	return router

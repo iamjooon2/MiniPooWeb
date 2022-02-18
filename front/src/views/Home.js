@@ -4,13 +4,15 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 
 const Home = () => {
-  
+
+  // const navigate = useNavigate();
+
   useEffect(() => {
     axios.get('/')
       .then(res => {
         console.log(res);
-      })
   }, [] );
+  });
 
   return (
     <>
@@ -23,7 +25,7 @@ const Home = () => {
       </Container>
     </>
   );
-};
+}
 
 export default Home;
 

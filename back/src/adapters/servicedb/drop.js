@@ -17,7 +17,9 @@ const drop = async () => {
   } catch(e) {
     console.error(e)
   } finally {
-    process.exit(0)
+    process.exit(0) 
+    //process.exit(0) -> 정상적으로 종료되었음을 알림(0을 리턴)
+    //process.exit(1) -> 문제가 있으면 1을 리턴하도록 한다
   }
 }
 
