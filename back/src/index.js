@@ -6,7 +6,7 @@ dotenv.config();
 const cors = require('cors');
 
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
+// const session = require('express-session');
 // const MySQLStore = require('express-mysql-session')(session);
 // const sessionStore = new MySQLStore(options);
 
@@ -18,7 +18,7 @@ const {
   COOKIE_SECRET
 } = process.env
 
-const server = async () => {
+const server =  () => {
   const app = express();
   app.use(express.json()); //express에 bodyparser 내장, json을 사용가능하게 한다
   app.use(express.urlencoded({ extended: true }));
@@ -27,14 +27,17 @@ const server = async () => {
     saveUninitialized: false,
     resave : false, 
     secret : process.env.COOKIE_SECRET,  // cookie에 보내주는 랜덤한 문자열의 기반
-    cookie: {
-
-      samesite : true,
-      expires: 60 * 60 * 24,
+    cookie : {
+      path : "/",
+      httpOnly : true
     }
-   }));
+  }));
   
-  app.use(cors());
+  app.use(cors(
+    {
+      origin : "*", // CORS
+    }
+    ));
 
   const v1Router = require('api/v1');
   app.use('/api/v1', v1Router(serviceDB));
