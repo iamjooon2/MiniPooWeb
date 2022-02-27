@@ -3,19 +3,18 @@ const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const cors = require('cors');
-
 const cookieParser = require('cookie-parser');
-// const session = require('express-session');
+const session = require('express-session');
 // const MySQLStore = require('express-mysql-session')(session);
 // const sessionStore = new MySQLStore(options);
+
+
 
 const { pool:serviceDB } = require('adapters/servicedb')
 
 const {
   SERVER_HOST,
-  SERVER_PORT,
-  COOKIE_SECRET
+  SERVER_PORT
 } = process.env
 
 const server =  () => {
@@ -32,12 +31,6 @@ const server =  () => {
       httpOnly : true
     }
   }));
-  
-  app.use(cors(
-    {
-      origin : "*", // CORS
-    }
-    ));
 
   const v1Router = require('api/v1');
   app.use('/api/v1', v1Router(serviceDB));

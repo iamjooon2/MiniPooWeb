@@ -1,1 +1,1 @@
-export const API_ROUTE = 'http://localhost:5001/api/v1/auth';
+export const API_ROUTE = '/api/v1/auth';
