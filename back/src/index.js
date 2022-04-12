@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 // const MySQLStore = require('express-mysql-session')(session);
@@ -21,6 +22,7 @@ const server =  () => {
   const app = express();
   app.use(express.json()); //express에 bodyparser 내장, json을 사용가능하게 한다
   app.use(express.urlencoded({ extended: true }));
+  app.use(compression());
   app.use(cookieParser(process.env.COOKIE_SECRET));
   app.use(session({
     saveUninitialized: false,
